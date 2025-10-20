@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Find Your Girlfriend 😏💔</title>
+  <style>
+    :root{
+      --bg-overlay: rgba(0,0,0,0.6);
+      --card:#1a1f2b; --accent:#ff4d4d; --muted:#b0b8c1;
+      font-family: Verdana, Geneva, Arial, sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+      background: url('https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+      color:#e6eef8;}
+    body::before{
+      content:'';position:absolute;top:0;left:0;width:100%;height:100%;
+      backdrop-filter: blur(6px);background-color:var(--bg-overlay);z-index:0;}
+
+    .wrap{position:relative;z-index:1;width:min(780px,94vw);padding:28px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 10px 30px rgba(2,6,23,0.7);}
+    h1{margin:0 0 8px;font-size:22px}
+    p.lead{margin:0 0 18px;color:var(--muted)}
+
+    .controls{display:flex;gap:10px;align-items:center}
+    input[type=text]{flex:1;padding:12px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit;font-size:15px}
+    button{padding:11px 16px;border-radius:8px;border:0;background:linear-gradient(90deg,var(--accent),#ff9b6b);color:#081022;font-weight:700;cursor:pointer}
+    button:disabled{opacity:0.5;cursor:default}
+
+    .stage{margin-top:18px;min-height:110px;display:flex;align-items:center;justify-content:center}
+    .card{width:100%;padding:18px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border:1px solid rgba(255,255,255,0.03)}
+
+    .search-lines{height:56px;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--muted)}
+    .progress{height:10px;background:rgba(255,255,255,0.03);border-radius:10px;margin-top:12px;overflow:hidden}
+    .progress > i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent),#ffd06b)}
+
+    .result{display:none;flex-direction:column;align-items:center;gap:8px}
+    .result h2{margin:6px 0;font-size:20px}
+    .result p{margin:0;color:var(--muted)}
+    .actions{margin-top:10px;display:flex;gap:8px}
+    .small{font-size:13px;padding:8px 10px;border-radius:8px}
+    .ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    footer{margin-top:14px;color:var(--muted);font-size:13px;text-align:center}
+
+    @media (max-width:520px){h1{font-size:18px}.controls{flex-direction:column;align-items:stretch}button{width:100%}}
+  </style>
+</head>
+<body>
+  <div class="wrap" role="main">
+    <h1>Find Your Girlfriend 😏💔</h1>
+    <p class="lead">Enter your name, hit <strong>Search</strong>, and witness the brutal truth about your love life. Warning: may cause laughter and existential dread. — Developer David</p>
+
+    <div class="controls">
+      <input id="nameInput" type="text" placeholder="Enter your name" aria-label="Your name" />
+      <button id="searchBtn">Search</button>
+    </div>
+
+    <div class="stage">
+      <div class="card">
+        <div id="searchArea">
+          <div class="search-lines" id="searchLines">Initializing heartbreak simulator...</div>
+          <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+        </div>
+
+        <div class="result" id="resultArea">
+          <h2 id="resultTitle"></h2>
+          <p id="resultText"></p>
+          <div class="actions">
+            <button class="small" id="copyBtn">Copy result</button>
+            <button class="small ghost" id="againBtn">Try again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>Not a dating app. Refresh to reset.</footer>
+  </div>
+
+  <script>
+    const searchBtn = document.getElementById('searchBtn');
+    const nameInput = document.getElementById('nameInput');
+    const searchLinesEl = document.getElementById('searchLines');
+    const bar = document.getElementById('bar');
+    const resultArea = document.getElementById('resultArea');
+    const searchArea = document.getElementById('searchArea');
+    const resultTitle = document.getElementById('resultTitle');
+    const resultText = document.getElementById('resultText');
+    const copyBtn = document.getElementById('copyBtn');
+    const againBtn = document.getElementById('againBtn');
+
+    const funnyLines = [
+      'Checking your chances against actual humans...',
+      'Scanning for people who tolerate you...',
+      'Consulting the ghosting frequency...',
+      'Measuring your cringe level...',
+      'Analyzing your social media despair...',
+      'Counting your red flags...',
+      'Matching with your future cat lady destiny...',
+      'Simulating awkward silences...',
+      'Verifying last 7 heartbreaks...',
+      'Injecting humor to soften existential pain...'
+    ];
+
+    const finalTemplates = [
+      (n) => `${n}, still single. Congrats on avoiding dating disasters.`,
+      (n) => `${n} — alone, undefeated, and slightly bitter.`,
+      (n) => `${n}, single. Your soulmate is probably fictional.`,
+      (n) => `${n} — still single. Enjoy your tragic freedom.`,
+      (n) => `${n}: Single. Love life status: apocalypse pending.`,
+      (n) => `${n} — still single. Extra pizza is yours by default.`
+    ];
+
+    function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+
+    function startFakeSearch(name){
+      searchBtn.disabled = true; nameInput.disabled = true;
+      resultArea.style.display = 'none'; searchArea.style.display = 'block';
+      bar.style.width = '0%';
+
+      let i = 0;
+      const interval = 800;
+      const totalTime = 4800;
+
+      const lineTimer = setInterval(()=>{
+        searchLinesEl.textContent = funnyLines[i % funnyLines.length];
+        i++;
+      }, interval);
+
+      let start = null;
+      function frame(ts){
+        if(!start) start=ts;
+        const elapsed = ts-start;
+        const pct = Math.min(100, Math.round((elapsed/totalTime)*100));
+        bar.style.width = pct + '%';
+        if(elapsed < totalTime){requestAnimationFrame(frame);}
+      }
+      requestAnimationFrame(frame);
+
+      setTimeout(()=>{
+        clearInterval(lineTimer);
+        showResult(name);
+      }, totalTime + 200);
+    }
+
+    function pickFinal(name){
+      const idx = Math.floor(Math.random()*finalTemplates.length);
+      return finalTemplates[idx](name);
+    }
+
+    function showResult(name){
+      const text = pickFinal(name);
+      resultTitle.textContent = 'Search complete.';
+      resultText.textContent = text;
+      searchArea.style.display = 'none';
+      resultArea.style.display = 'flex';
+      searchBtn.disabled = false; nameInput.disabled = false;
+    }
+
+    searchBtn.addEventListener('click', ()=>{
+      const name = nameInput.value.trim() || 'Friend';
+      startFakeSearch(name);
+    });
+
+    nameInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') searchBtn.click(); });
+
+    copyBtn.addEventListener('click', ()=>{
+      const txt = resultText.textContent;
+      navigator.clipboard?.writeText(txt).then(()=>{
+        copyBtn.textContent = 'Copied!';
+        setTimeout(()=>copyBtn.textContent = 'Copy result',1400);
+      }).catch(()=>{
+        copyBtn.textContent = 'Copy failed';
+        setTimeout(()=>copyBtn.textContent = 'Copy result',1400);
+      });
+    });
+
+    againBtn.addEventListener('click', ()=>{
+      resultArea.style.display = 'none'; searchArea.style.display = 'block'; bar.style.width = '0%'; searchLinesEl.textContent = 'Initializing heartbreak simulator...';
+    });
+  </script>
+</body>
+</html>
