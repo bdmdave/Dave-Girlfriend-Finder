@@ -18,23 +18,32 @@
       content:'';position:absolute;top:0;left:0;width:100%;height:100%;
       backdrop-filter: blur(6px);background-color:var(--bg-overlay);z-index:0;}
 
-    .wrap{position:relative;z-index:1;width:min(780px,94vw);padding:28px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 10px 30px rgba(2,6,23,0.7);}
-    h1{margin:0 0 8px;font-size:22px}
-    p.lead{margin:0 0 18px;color:var(--muted)}
+    .wrap{position:relative;z-index:1;width:min(780px,94vw);padding:28px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 10px 30px rgba(2,6,23,0.7);opacity:0;animation:fadeIn 1s forwards;}
+    h1{margin:0 0 8px;font-size:22px;transform:translateY(-20px);opacity:0;animation:slideDown 0.8s forwards 0.2s;}
+    p.lead{margin:0 0 18px;color:var(--muted);transform:translateY(-20px);opacity:0;animation:slideDown 0.8s forwards 0.4s;}
 
-    .controls{display:flex;gap:10px;align-items:center}
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+    @keyframes slideDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+
+    .controls{display:flex;gap:10px;align-items:center;transform:translateY(-20px);opacity:0;animation:slideDown 0.8s forwards 0.6s;}
     input[type=text]{flex:1;padding:12px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit;font-size:15px}
-    button{padding:11px 16px;border-radius:8px;border:0;background:linear-gradient(90deg,var(--accent),#ff9b6b);color:#081022;font-weight:700;cursor:pointer}
+    button{padding:11px 16px;border-radius:8px;border:0;background:linear-gradient(90deg,var(--accent),#ff9b6b);color:#081022;font-weight:700;cursor:pointer;transition:transform 0.2s;}
+    button:hover{transform:scale(1.05);}
     button:disabled{opacity:0.5;cursor:default}
 
-    .stage{margin-top:18px;min-height:110px;display:flex;align-items:center;justify-content:center}
-    .card{width:100%;padding:18px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border:1px solid rgba(255,255,255,0.03)}
+    .stage{margin-top:18px;min-height:110px;display:flex;align-items:center;justify-content:center;transition:all 0.5s ease;}
+    .card{width:100%;padding:18px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border:1px solid rgba(255,255,255,0.03);transform:scale(0.95);opacity:0;animation:cardPop 0.8s forwards 0.8s;}
 
-    .search-lines{height:56px;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--muted)}
-    .progress{height:10px;background:rgba(255,255,255,0.03);border-radius:10px;margin-top:12px;overflow:hidden}
-    .progress > i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent),#ffd06b)}
+    @keyframes cardPop{from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);}}
 
-    .result{display:none;flex-direction:column;align-items:center;gap:8px}
+    .search-lines{height:56px;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--muted);animation:blink 1s infinite;}
+    @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.4;}}
+
+    .progress{height:10px;background:rgba(255,255,255,0.03);border-radius:10px;margin-top:12px;overflow:hidden;}
+    .progress > i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent),#ffd06b);transition:width 0.2s;}
+
+    .result{display:none;flex-direction:column;align-items:center;gap:8px;opacity:0;transform:translateY(20px);transition:all 0.5s ease;}
+    .result.show{display:flex;opacity:1;transform:translateY(0);}
     .result h2{margin:6px 0;font-size:20px}
     .result p{margin:0;color:var(--muted)}
     .actions{margin-top:10px;display:flex;gap:8px}
@@ -108,14 +117,18 @@
       (n) => `${n}, single. Your soulmate is probably fictional.`,
       (n) => `${n} — still single. Enjoy your tragic freedom.`,
       (n) => `${n}: Single. Love life status: apocalypse pending.`,
-      (n) => `${n} — still single. Extra pizza is yours by default.`
+      (n) => `${n} — still single. Extra pizza is yours by default.`,
+      (n) => `${n}, romance not found. Consider adopting a goldfish.`,
+      (n) => `${n} — solo adventurer of the lonely hearts club.`,
+      (n) => `${n}, unmatched. Your soulmate is on vacation forever.`,
+      (n) => `${n} — still single. Perfect time to binge-watch and judge others.`
     ];
 
     function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 
     function startFakeSearch(name){
       searchBtn.disabled = true; nameInput.disabled = true;
-      resultArea.style.display = 'none'; searchArea.style.display = 'block';
+      resultArea.classList.remove('show'); searchArea.style.display = 'block';
       bar.style.width = '0%';
 
       let i = 0;
@@ -153,7 +166,7 @@
       resultTitle.textContent = 'Search complete.';
       resultText.textContent = text;
       searchArea.style.display = 'none';
-      resultArea.style.display = 'flex';
+      resultArea.classList.add('show');
       searchBtn.disabled = false; nameInput.disabled = false;
     }
 
@@ -176,7 +189,7 @@
     });
 
     againBtn.addEventListener('click', ()=>{
-      resultArea.style.display = 'none'; searchArea.style.display = 'block'; bar.style.width = '0%'; searchLinesEl.textContent = 'Initializing heartbreak simulator...';
+      resultArea.classList.remove('show'); searchArea.style.display = 'block'; bar.style.width = '0%'; searchLinesEl.textContent = 'Initializing heartbreak simulator...';
     });
   </script>
 </body>
