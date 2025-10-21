@@ -1,21 +1,20 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Find Your Girlfriend 😏💔</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Love Life Predictor 😏💔</title>
 <style>
 :root{
   --bg-overlay: rgba(0,0,0,0.6);
   --card:#1a1f2b; --accent:#ff4d4d; --muted:#b0b8c1;
   font-family: Verdana, Geneva, Arial, sans-serif;
 }
-*{box-sizing:border-box}
+*{box-sizing:border-box;}
 body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
   background: url('https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
   color:#e6eef8;position:relative;}
-body::before{
-  content:'';position:absolute;top:0;left:0;width:100%;height:100%;
+body::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;
   backdrop-filter: blur(6px);background-color:var(--bg-overlay);z-index:0;}
 
 .wrap{position:relative;z-index:1;width:min(780px,94vw);padding:28px;border-radius:12px;
@@ -28,12 +27,12 @@ p.lead{margin:0 0 18px;color:var(--muted);transform:translateY(-20px);opacity:0;
 @keyframes slideDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
 
 .controls{display:flex;gap:10px;align-items:center;transform:translateY(-20px);opacity:0;animation:slideDown 0.8s forwards 0.6s;}
-input[type=text], input[type=number]{flex:1;padding:12px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit;font-size:15px}
+input[type=text], input[type=number]{flex:1;padding:12px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit;font-size:15px;}
 button{padding:11px 16px;border-radius:8px;border:0;background:linear-gradient(90deg,var(--accent),#ff9b6b);color:#081022;font-weight:700;cursor:pointer;transition:transform 0.2s;}
 button:hover{transform:scale(1.05);}
-button:disabled{opacity:0.5;cursor:default}
+button:disabled{opacity:0.5;cursor:default;}
 
-.stage{margin-top:18px;min-height:130px;display:flex;align-items:center;justify-content:center;transition:all 0.5s ease;}
+.stage{margin-top:18px;min-height:140px;display:flex;align-items:center;justify-content:center;transition:all 0.5s ease;}
 .card{width:100%;padding:18px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border:1px solid rgba(255,255,255,0.03);transform:scale(0.95);opacity:0;animation:cardPop 0.8s forwards 0.8s;}
 
 @keyframes cardPop{from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);}}
@@ -75,8 +74,8 @@ footer{margin-top:14px;color:var(--muted);font-size:13px;text-align:center}
 </head>
 <body>
 <div class="wrap" role="main">
-  <h1>Find Your Girlfriend 😏💔</h1>
-  <p class="lead">Enter your name & age, hit <strong>Search</strong>, and witness the brutal truth about your love life. Warning: may cause laughter and existential dread. — Developer David</p>
+  <h1>Love Life Predictor 😏💔</h1>
+  <p class="lead">Enter your name & age, hit <strong>Search</strong>, and see a personalized future prediction. — Developer David</p>
 
   <div class="controls">
     <input id="nameInput" type="text" placeholder="Enter your name" aria-label="Your name" />
@@ -87,7 +86,7 @@ footer{margin-top:14px;color:var(--muted);font-size:13px;text-align:center}
   <div class="stage">
     <div class="card">
       <div id="searchArea">
-        <div class="search-lines" id="searchLines">Initializing heartbreak simulator...</div>
+        <div class="search-lines" id="searchLines">Initializing love simulator...</div>
         <div class="progress" aria-hidden="true"><i id="bar"></i></div>
       </div>
 
@@ -106,6 +105,7 @@ footer{margin-top:14px;color:var(--muted);font-size:13px;text-align:center}
 </div>
 
 <script>
+// Elements
 const searchBtn = document.getElementById('searchBtn');
 const nameInput = document.getElementById('nameInput');
 const ageInput = document.getElementById('ageInput');
@@ -119,6 +119,7 @@ const copyBtn = document.getElementById('copyBtn');
 const againBtn = document.getElementById('againBtn');
 const emojiEl = document.getElementById('emoji');
 
+const emojis = ['💔','😂','😭','🥹','😏','❤️‍🔥','😅','🤣','🫠','💘'];
 const funnyLines = [
   'Checking your chances against actual humans...',
   'Scanning for people who tolerate you...',
@@ -129,95 +130,61 @@ const funnyLines = [
   'Matching with your future cat lady destiny...',
   'Simulating awkward silences...',
   'Verifying last 7 heartbreaks...',
-  'Injecting humor to soften existential pain...',
-  'Calculating heartbreak per year...',
-  'Checking if love is out of stock...',
-  'Analyzing flirtation skills (none detected)...',
-  'Measuring awkwardness index...',
-  'Scanning for potential imaginary partners...',
-  'Assessing meme compatibility...',
-  'Checking emotional baggage allowance...',
-  'Calculating likelihood of pet adoption before love...',
-  'Verifying loneliness levels...',
-  'Assessing social media jealousy potential...',
-  'Analyzing past bad decisions...',
-  'Scanning humor-to-disaster ratio...',
-  'Measuring karaoke disaster risk...',
-  'Checking coffee consumption vs. love potential...',
-  'Calculating pizza-for-two compatibility...',
-  'Analyzing emoji usage in love texts...',
-  'Verifying history of awkward compliments...',
-  'Calculating chances of ghosting...',
-  'Scanning for Netflix binge soulmate avoidance...',
-  'Analyzing birthday surprise disasters...',
-  'Measuring social awkwardness score...',
-  'Checking dating app usage statistics...',
-  'Calculating heartbreak per decade...',
-  'Analyzing failed pickup lines...',
-  'Measuring meme-related heartbreak...',
-  'Scanning loneliness hashtags...',
-  'Checking for imaginary boyfriends/girlfriends...',
-  'Assessing flirting skill decay...',
-  'Verifying love life inactivity...',
-  'Calculating awkward silence index...',
-  'Measuring snack-to-love ratio...',
-  'Analyzing failed romantic gestures...',
-  'Scanning for accidental insults...',
-  'Measuring tendency to overshare feelings...',
-  'Verifying overthinking levels...',
-  'Assessing crying-in-shower frequency...',
-  'Checking texting-to-date ratio...',
-  'Calculating failed promises...',
-  'Analyzing awkward dancing history...',
-  'Measuring sarcasm in love messages...'
+  'Injecting humor to soften existential pain...'
 ];
 
-const emojis = ['💔','😂','😭','🥹','😏','❤️‍🔥','😅','🤣','🫠','💘'];
+// Realistic future prediction templates
+const resultTemplates = [
+  (name,age)=> `${name}, age ${age}, you will meet someone interesting by ${parseInt(age)+2}.`,
+  (name,age)=> `${name}, age ${age}, still single? Don’t worry, marriage likely at ${parseInt(age)+5}.`,
+  (name,age)=> `${name}, age ${age}, your love life looks mysterious until age ${parseInt(age)+3}.`,
+  (name,age)=> `${name}, age ${age}, expect heartbreak and pizza nights mixed until ${parseInt(age)+1}.`,
+  (name,age)=> `${name}, age ${age}, soon a surprise date may appear in your life.`,
+  (name,age)=> `${name}, age ${age}, romance will find you unexpectedly at ${parseInt(age)+4}.`,
+  (name,age)=> `${name}, age ${age}, single life continues but happiness grows.`,
+  (name,age)=> `${name}, age ${age}, marriage may be funny, awkward, or slightly tragic at ${parseInt(age)+6}.`,
+  (name,age)=> `${name}, age ${age}, someone secretly admires you.`,
+  (name,age)=> `${name}, age ${age}, love life: a rollercoaster with pizza and memes.`,
+  (name,age)=> `${name}, age ${age}, you’ll find joy and heartbreak in equal measure.`,
+  (name,age)=> `${name}, age ${age}, romance: awkward, but memorable.`,
+  (name,age)=> `${name}, age ${age}, a mysterious admirer will appear soon.`,
+  (name,age)=> `${name}, age ${age}, single, happy, and slightly chaotic.`
+];
 
-const finalTemplates = Array.from({length:50}, (_,i)=>{
-  return (name,age)=> `${name}, age ${age}, single. Love life status: hilarious chaos detected (#${i+1}).`;
-});
-
+// Functions
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 
 function startFakeSearch(name,age){
-  searchBtn.disabled = true; nameInput.disabled = true; ageInput.disabled = true;
+  searchBtn.disabled=true; nameInput.disabled=true; ageInput.disabled=true;
   resultArea.classList.remove('show'); searchArea.style.display='block'; bar.style.width='0%';
-  let i = 0;
-  const interval = 600;
-  const totalTime = 5000;
-  const lineTimer = setInterval(()=>{searchLinesEl.textContent = funnyLines[i % funnyLines.length]; i++;}, interval);
+  let i=0; const interval=600; const totalTime=4800;
+  const lineTimer = setInterval(()=>{searchLinesEl.textContent=funnyLines[i%funnyLines.length]; i++;}, interval);
 
-  let start = null;
+  let start=null;
   function frame(ts){
     if(!start) start=ts;
-    const elapsed = ts-start;
-    const pct = Math.min(100, Math.round((elapsed/totalTime)*100));
-    bar.style.width = pct + '%';
-    if(elapsed < totalTime){requestAnimationFrame(frame);}
+    const elapsed=ts-start;
+    const pct=Math.min(100,Math.round((elapsed/totalTime)*100));
+    bar.style.width=pct+'%';
+    if(elapsed<totalTime){requestAnimationFrame(frame);}
   }
   requestAnimationFrame(frame);
 
-  setTimeout(()=>{
-    clearInterval(lineTimer);
-    showResult(name,age);
-  }, totalTime + 200);
+  setTimeout(()=>{clearInterval(lineTimer); showResult(name,age);}, totalTime+200);
 }
 
-function pickFinal(name,age){
-  const idx = Math.floor(Math.random()*finalTemplates.length);
+function pickResult(name,age){
+  const idx = Math.floor(Math.random()*resultTemplates.length);
   const emojiIdx = Math.floor(Math.random()*emojis.length);
-  emojiEl.textContent = emojis[emojiIdx];
-  emojiEl.classList.remove('emoji-pop');
-  void emojiEl.offsetWidth; // trigger reflow
-  emojiEl.classList.add('emoji-pop');
-  return finalTemplates[idx](name,age);
+  emojiEl.textContent=emojis[emojiIdx];
+  emojiEl.classList.remove('emoji-pop'); void emojiEl.offsetWidth; emojiEl.classList.add('emoji-pop');
+  return resultTemplates[idx](name,age);
 }
 
 function createConfetti(){
-  const count = 20;
+  const count=20;
   for(let i=0;i<count;i++){
-    const conf = document.createElement('div');
+    const conf=document.createElement('div');
     conf.className='emoji-fly';
     conf.textContent=emojis[Math.floor(Math.random()*emojis.length)];
     conf.style.setProperty('--x', `${Math.random()*120-60}px`);
@@ -230,42 +197,38 @@ function createConfetti(){
 }
 
 function showResult(name,age){
-  const text = pickFinal(name,age);
-  resultTitle.textContent = 'Search complete. ';
-  resultTitle.appendChild(emojiEl);
-  resultText.textContent = text;
+  const text=pickResult(name,age);
+  resultTitle.textContent='Search complete. '; resultTitle.appendChild(emojiEl);
+  resultText.textContent=text;
   searchArea.style.display='none';
   resultArea.classList.add('show');
   createConfetti();
-  searchBtn.disabled = false; nameInput.disabled=false; ageInput.disabled=false;
+  searchBtn.disabled=false; nameInput.disabled=false; ageInput.disabled=false;
 }
 
-searchBtn.addEventListener('click', ()=>{
-  const name = nameInput.value.trim() || 'Friend';
-  const age = ageInput.value.trim() || 'unknown';
+// Event Listeners
+searchBtn.addEventListener('click',()=>{
+  const name=nameInput.value.trim()||'Friend';
+  const age=ageInput.value.trim()||'unknown';
   startFakeSearch(name,age);
 });
 
 [nameInput, ageInput].forEach(el=>{
-  el.addEventListener('keydown', e=>{if(e.key==='Enter') searchBtn.click();});
+  el.addEventListener('keydown',e=>{if(e.key==='Enter') searchBtn.click();});
 });
 
-copyBtn.addEventListener('click', ()=>{
-  const txt = resultText.textContent;
+copyBtn.addEventListener('click',()=>{
+  const txt=resultText.textContent;
   navigator.clipboard?.writeText(txt).then(()=>{
-    copyBtn.textContent='Copied!';
-    setTimeout(()=>copyBtn.textContent='Copy result',1400);
+    copyBtn.textContent='Copied!'; setTimeout(()=>copyBtn.textContent='Copy result',1400);
   }).catch(()=>{
-    copyBtn.textContent='Copy failed';
-    setTimeout(()=>copyBtn.textContent='Copy result',1400);
+    copyBtn.textContent='Copy failed'; setTimeout(()=>copyBtn.textContent='Copy result',1400);
   });
 });
 
-againBtn.addEventListener('click', ()=>{
-  resultArea.classList.remove('show');
-  searchArea.style.display='block';
-  bar.style.width='0%';
-  searchLinesEl.textContent='Initializing heartbreak simulator...';
+againBtn.addEventListener('click',()=>{
+  resultArea.classList.remove('show'); searchArea.style.display='block'; bar.style.width='0%';
+  searchLinesEl.textContent='Initializing love simulator...';
 });
 </script>
 </body>
